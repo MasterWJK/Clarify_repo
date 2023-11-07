@@ -1,7 +1,6 @@
 # Installation of Clarify App
 
-Welcome to the installation guide for the Clarify App. This document will walk you through the process of setting up the Clarify Flutter app on your local machine. Whether you're looking to contribute or just want to run the app, these instructions will help you get started with ease.
-
+Welcome to the installation guide for the Clarify App. This document will walk you through the process of setting up the Clarify Flutter app on your local machine. 
 ## Prerequisites
 Before we begin, ensure that you have the following prerequisites installed:
 - Flutter SDK: Download and install Flutter from the [official website](https://flutter.dev).
