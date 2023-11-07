@@ -6,6 +6,8 @@ Before we begin, ensure that you have the following prerequisites installed:
 - Flutter SDK: Download and install Flutter from the [official website](https://flutter.dev).
 - Dart SDK: Included with the Flutter SDK, so no separate installation is necessary.
 
+-> Check the notion page
+
 ## Installation Steps
 1. Open your terminal or command prompt.
 2. Navigate to the directory where you want to clone the Clarify repository.
