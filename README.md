@@ -1,22 +1,36 @@
 # Installation of Clarify App
 
-Welcome to the installation guide for the Clarify App. This document will walk you through the process of setting up the Clarify Flutter app on your local machine. 
+Welcome to the installation guide for the Clarify App. This document will walk you through the process of setting up the Clarify Flutter app on your local machine for both MacOS and Windows systems, as well as how to run the app on an iPhone.
+
 ## Prerequisites
-Before we begin, ensure that you have the following prerequisites installed:
 - Flutter SDK: Download and install Flutter from the [official website](https://flutter.dev).
 - Dart SDK: Included with the Flutter SDK, so no separate installation is necessary.
 
--> Check the notion page
+## MacOS Installation (Including Apple Silicon)
+1. Open the Terminal. For Apple Silicon, run `sudo softwareupdate --install-rosetta --agree-to-license`.
+2. Install Xcode from the Mac App Store.
+3. Download and extract the Flutter SDK for Intel or Apple Silicon.
+4. Add Flutter to your path permanently by updating your `.zshrc` file.
+5. Run `flutter doctor` to verify your installation.
 
-## Installation Steps
-1. Open your terminal or command prompt.
-2. Navigate to the directory where you want to clone the Clarify repository.
-3. Run the command `git clone https://github.com/MasterWJK/Clarify_repo` to clone the repository into your desired directory.
-4. Change directory into the cloned repository by executing `cd Clarify_repo`.
-5. Install all the necessary Flutter packages by running `flutter pub get`.
-6. Connect an Android or iOS device to your computer, or set up an emulator/simulator for the platform of your choice.
-7. To launch the app, run `flutter run` in the root directory of the project.
+## Windows Installation
+1. Download and extract the Flutter SDK for Windows.
+2. Update the PATH environment variable to include the path to `flutter\bin`.
+3. Run `flutter doctor` to confirm the setup.
 
-By following these steps, you will have the Clarify app running on your local device or emulator/simulator. This setup is ideal for development, testing, or simply exploring the app's features.
+## Running the App on an iPhone
+- Sign into Xcode with your Apple ID.
+- Enable Developer Mode on your iPhone via `Settings` → `Privacy & Security`.
+
+## Installation Steps (Common for MacOS and Windows)
+1. Open a terminal or command prompt.
+2. Navigate to the directory where you want to clone the repository.
+3. Run `git clone https://github.com/MasterWJK/Clarify_repo` to clone the repository.
+4. Change to the cloned repository directory with `cd Clarify_repo`.
+5. Run `flutter pub get` to install dependencies.
+6. Connect your Android or iOS device or set up an emulator/simulator.
+7. Execute `flutter run` to start the app.
+
+For detailed MacOS and Windows installation instructions, please see the sections above.
 
 Thank you for your interest in the Clarify App, and happy coding!
