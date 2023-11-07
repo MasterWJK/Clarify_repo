@@ -1,9 +1,19 @@
-import 'package:flutter/material.dart';
-import '/mainpages/PageOne.dart';
-import '/mainpages/PageTwo.dart';
-import '/mainpages/PageThree.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() {
+import 'package:flutter/material.dart';
+import 'main_pages/PageOne.dart';
+import 'main_pages/PageTwo.dart';
+import 'main_pages/PageThree.dart';
+import 'login/LoginScreen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure initialization
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  ); // Initialize Firebase
+
   runApp(const MainApp());
 }
 
@@ -12,8 +22,16 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData(
+      primarySwatch: Colors.amber,
+      primaryColor: Colors.amber[800], // Use amber[800] as the primary color
+    );
+    // Get the current user
+    final user = FirebaseAuth.instance.currentUser;
+
+    // Return either the Home or Login screen
     return MaterialApp(
-      home: HomePage(),
+      home: user == null ? const LoginScreen() : const HomePage(),
     );
   }
 }

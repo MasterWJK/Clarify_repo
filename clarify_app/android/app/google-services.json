@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "538443592518",
+    "project_id": "clarify-backend",
+    "storage_bucket": "clarify-backend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538443592518:android:3d6059bc835dd78cb26b47",
+        "android_client_info": {
+          "package_name": "com.example.clarify_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW8y4mUfHoZ0sbfNM9WCPWVR7RNd1tbeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
