@@ -21,6 +21,10 @@ Welcome to the installation guide for the Clarify App. This document will walk y
 ## Running the App on an iPhone
 - Sign into Xcode with your Apple ID.
 - Enable Developer Mode on your iPhone via `Settings` → `Privacy & Security`.
+- For first-time installation:
+  - Verify the Developer App certificate: Navigate to `Settings` > `General` > `VPN & Device Management` on your device, and trust your Developer App certificate.
+
+
 
 ## Installation Steps (Common for MacOS and Windows)
 1. Open a terminal or command prompt.
