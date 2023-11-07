@@ -1,37 +1,36 @@
-# Langchain Ask PDF (Tutorial)
+# Installation of Clarify App
 
->You may find the step-by-step video tutorial to build this application [on Youtube](https://youtu.be/wUAUdEw5oxM).
+Welcome to the installation guide for the Clarify App. This document will walk you through the process of setting up the Clarify Flutter app on your local machine for both MacOS and Windows systems, as well as how to run the app on an iPhone.
 
-This is a Python application that allows you to load a PDF and ask questions about it using natural language. The application uses a LLM to generate a response about your PDF. The LLM will not answer questions unrelated to the document.
+## Prerequisites
+- Flutter SDK: Download and install Flutter from the [official website](https://flutter.dev).
+- Dart SDK: Included with the Flutter SDK, so no separate installation is necessary.
 
-## How it works
+## MacOS Installation (Including Apple Silicon)
+1. Open the Terminal. For Apple Silicon, run `sudo softwareupdate --install-rosetta --agree-to-license`.
+2. Install Xcode from the Mac App Store.
+3. Download and extract the Flutter SDK for Intel or Apple Silicon.
+4. Add Flutter to your path permanently by updating your `.zshrc` file.
+5. Run `flutter doctor` to verify your installation.
 
-The application reads the PDF and splits the text into smaller chunks that can be then fed into a LLM. It uses OpenAI embeddings to create vector representations of the chunks. The application then finds the chunks that are semantically similar to the question that the user asked and feeds those chunks to the LLM to generate a response.
+## Windows Installation
+1. Download and extract the Flutter SDK for Windows.
+2. Update the PATH environment variable to include the path to `flutter\bin`.
+3. Run `flutter doctor` to confirm the setup.
 
-The application uses Streamlit to create the GUI and Langchain to deal with the LLM.
+## Running the App on an iPhone
+- Sign into Xcode with your Apple ID.
+- Enable Developer Mode on your iPhone via `Settings` → `Privacy & Security`.
 
+## Installation Steps (Common for MacOS and Windows)
+1. Open a terminal or command prompt.
+2. Navigate to the directory where you want to clone the repository.
+3. Run `git clone https://github.com/MasterWJK/Clarify_repo` to clone the repository.
+4. Change to the cloned repository directory with `cd Clarify_repo`.
+5. Run `flutter pub get` to install dependencies.
+6. Connect your Android or iOS device or set up an emulator/simulator.
+7. Execute `flutter run` to start the app.
 
-## Installation
+For detailed MacOS and Windows installation instructions, please see the sections above.
 
-To install the repository, please clone this repository and install the requirements:
-
-```
-pip install -r requirements.txt
-```
-
-You will also need to add your OpenAI API key to the `.env` file.
-
-## Usage
-
-To use the application, run the `main.py` file with the streamlit CLI (after having installed streamlit): 
-
-```
-streamlit run app.py
-```
-
-
-## Contributing
-
-This repository is for educational purposes only and is not intended to receive further contributions. It is supposed to be used as support material for the YouTube tutorial that shows how to build the project.
-
-
+Thank you for your interest in the Clarify App, and happy coding!
