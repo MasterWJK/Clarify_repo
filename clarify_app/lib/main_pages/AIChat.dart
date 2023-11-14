@@ -26,6 +26,16 @@ class OpenAIChatPageState extends State<AIChat> {
     print(widget.env);
   }
 
+  /// Sends a user query to OpenAI chatbot and listens to the response stream.
+  ///
+  /// If the query is not empty, it creates a stream of [OpenAIStreamChatCompletionModel]
+  /// using the OpenAI instance and the specified model. The stream listens to the
+  /// response from the chatbot and passes the response to [streamWords] function.
+  ///
+  /// The [query] parameter is the user's input message to the chatbot.
+  ///
+  /// The function returns nothing, but it sets [_chatSubscription] to the chat stream
+  /// subscription, which can be used to cancel the subscription later.
   void sendToAI(String query) async {
     if (query.isNotEmpty) {
       Stream<OpenAIStreamChatCompletionModel> chatStream =
@@ -52,20 +62,25 @@ class OpenAIChatPageState extends State<AIChat> {
     }
   }
 
+  /// Splits the [response] into words and adds each word to the chat history as a new message starting with "AI: ".
+  /// If the previous message in the chat history also starts with "AI: ", the word is appended to the previous message.
+  /// Scrolls to the bottom of the chat history after adding the new message.
   void streamWords(String response) {
     var words = response.split(' ');
     for (var word in words) {
       setState(() {
         if (_chatHistory.isNotEmpty && _chatHistory.last.startsWith('AI: ')) {
+          // append to last message:
           _chatHistory[_chatHistory.length - 1] += ' $word';
         } else {
+          // start with AI:
           _chatHistory.add('AI: $word');
         }
       });
     }
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.easeOut,
     );
   }
@@ -81,10 +96,11 @@ class OpenAIChatPageState extends State<AIChat> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      // Dismiss keyboard when tapping outside of TextField
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('OpenAI Chatbot'),
+          title: const Text('OpenAI Chatbot'), // App title
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -99,6 +115,7 @@ class OpenAIChatPageState extends State<AIChat> {
         body: Column(
           children: [
             Expanded(
+              // Chat history
               child: ListView.builder(
                 controller: _scrollController,
                 itemCount: _chatHistory.length,
@@ -110,7 +127,7 @@ class OpenAIChatPageState extends State<AIChat> {
                         ? Alignment.centerRight
                         : Alignment.centerLeft,
                     child: Container(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       margin: EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
                         color:

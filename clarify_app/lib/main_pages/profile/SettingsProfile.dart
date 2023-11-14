@@ -216,20 +216,24 @@ class SettingsProfileState extends State<SettingsProfile> {
                           context,
                           CupertinoPageRoute(
                             builder: (_) => ScrollConfiguration(
-                              behavior: const ScrollBehavior(),
+                              behavior: const ScrollBehavior()
+                                  .copyWith(overscroll: false),
                               child: // long example licence text
-                                  const LicensePage(
-                                applicationName: "R3cylce",
+                                  LicensePage(
+                                applicationName: "Clarify",
                                 applicationVersion: "1.0.0",
-                                applicationIcon: SizedBox(
-                                  height: 100,
-                                  width: 100,
-                                  // child: SvgPicture.asset(
-                                  //   "assets/images/logo.svg",
-                                  //   color: Color(0xFF054F46),
-                                  // ),
+                                applicationIcon: Padding(
+                                  padding: // vertical padding
+                                      const EdgeInsets.symmetric(
+                                          vertical: 20.0),
+                                  child: SizedBox(
+                                      height: 100,
+                                      width: 100,
+                                      child: Image.asset(
+                                        'assets/icon/ClarifyAI.png',
+                                      )),
                                 ),
-                                applicationLegalese: "© 2023 R3",
+                                applicationLegalese: "© 2023 Clarify",
                               ),
                             ),
                           ),
