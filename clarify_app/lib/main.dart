@@ -1,18 +1,24 @@
+import 'package:clarify_app/main_pages/profile/OwnProfile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-import 'main_pages/PageOne.dart';
-import 'main_pages/PageTwo.dart';
-import 'main_pages/PageThree.dart';
+import 'main_pages/Home.dart';
+import 'main_pages/AIChat.dart';
+import 'main_pages/ChallengesPage.dart';
 import 'login/LoginScreen.dart';
+import 'main_pages/profile/OwnProfile.dart';
 
-void main() async {
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Ensure initialization
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ); // Initialize Firebase
+  await dotenv.load(fileName: "assets/.env");
 
   runApp(const MainApp());
 }
@@ -23,8 +29,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData(
-      primarySwatch: Colors.amber,
-      primaryColor: Colors.amber[800], // Use amber[800] as the primary color
+      primarySwatch: Colors.blue,
+      primaryColor: Colors.blue[800], // Use blue[800] as the primary color
     );
     // Get the current user
     final user = FirebaseAuth.instance.currentUser;
@@ -45,10 +51,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+
   final List<Widget> _pages = [
-    PageOne(),
-    PageTwo(),
-    PageThree(),
+    Home(),
+    FutureBuilder<String>(
+      future: rootBundle.loadString('assets/.env'),
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.hasData) {
+          return AIChat(env: snapshot.data!);
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    ),
+    ChallengesPage(),
+    OwnProfile(),
   ];
 
   void _onItemTapped(int index) {
@@ -66,20 +83,26 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.speaker_notes), // Speech icon
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(Icons.android), // Robot icon
+            label: 'AI Simulation',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.star), // Challenge icon
+            label: 'Challenges',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle), // Profile icon
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.blue[800],
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
         onTap: _onItemTapped,
       ),
     );
