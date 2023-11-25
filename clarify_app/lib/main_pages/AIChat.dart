@@ -1,7 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:dart_openai/dart_openai.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+// import necessary Whisper libraries
 
 class AIChat extends StatefulWidget {
   final String env;
@@ -19,13 +20,47 @@ class OpenAIChatPageState extends State<AIChat> {
   StreamSubscription? _chatSubscription;
   final ScrollController _scrollController = ScrollController();
 
+  //Initialize FlutterSound instance
+  final audioRecorder = FlutterSoundRecorder();
+
   @override
   void initState() {
     super.initState();
+    // Intialize the audio recorder
+    _audioRecorder.openAudioSession().then((value) {
+      setState(() {
+        print('Audio session opened');
+      });
+    });
+
     OpenAI.apiKey = widget.env;
     print(widget.env);
   }
 
+  // Add recordAndTranscribeAudio() method to the OpenAIChatPageState class for recording and transcribing audio.
+  Future<void> recordAndTranscribeAudio() async {
+    // Start recording.
+    await _audioRecorder.startRecorder();
+    // Wait for the user to finish speaking.
+    await Future.delayed(Duration(seconds: 5)); // Adjust this delay as needed.
+    // Stop recording.
+    await _audioRecorder.stopRecorder();
+    // Get the path to the recorded audio file.
+    String path = _audioRecorder.savedUri;
+    // Transcribe the audio using the Whisper API.
+    String transcription = await transcribeAudio(path);
+    // Send the transcription to the AI.
+    sendToAI(transcription);
+  }
+
+  Future<String> transcribeAudio(String path) async {
+    // Use the Whisper API to transcribe the audio.
+    // This will depend on the specific Whisper API package you're using.
+    // Replace this with the actual implementation.
+    return 'transcription';
+  }
+
+  /// Add a new method here to handle audio input from the user.
   /// Sends a user query to OpenAI chatbot and listens to the response stream.
   ///
   /// If the query is not empty, it creates a stream of [OpenAIStreamChatCompletionModel]
@@ -36,6 +71,8 @@ class OpenAIChatPageState extends State<AIChat> {
   ///
   /// The function returns nothing, but it sets [_chatSubscription] to the chat stream
   /// subscription, which can be used to cancel the subscription later.
+  /// Update the UI to accept audio input.
+
   void sendToAI(String query) async {
     if (query.isNotEmpty) {
       Stream<OpenAIStreamChatCompletionModel> chatStream =
