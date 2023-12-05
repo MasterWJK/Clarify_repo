@@ -233,32 +233,30 @@ class _LoginFourState extends State<LoginFour> {
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Padding(
                 padding: const EdgeInsets.only(left: 40.0, right: 40.0),
-                child: Material(
-                  child: InkWell(
-                    onTap: () {
-                      toggleSelectedField(5);
-                    },
-                    child: Opacity(
-                      opacity: selectedFields.contains(5) ? 1.0 : 0.5,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        padding: const EdgeInsets.only(
-                          left: 20.0,
-                          top: 14.0,
-                          bottom: 10.0,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.grey.shade300),
-                        ),
-                        child: Text(
-                          'Chinese',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 14,
-                          ),
+                child: InkWell(
+                  onTap: () {
+                    toggleSelectedField(5);
+                  },
+                  child: Opacity(
+                    opacity: selectedFields.contains(5) ? 1.0 : 0.5,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      padding: const EdgeInsets.only(
+                        left: 20.0,
+                        top: 14.0,
+                        bottom: 10.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: Colors.grey.shade300),
+                      ),
+                      child: Text(
+                        'Chinese',
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 14,
                         ),
                       ),
                     ),
