@@ -253,7 +253,7 @@ class _LoginFourState extends State<LoginFour> {
                         border: Border.all(color: Colors.grey.shade300),
                       ),
                       child: Text(
-                        'Chinese',
+                        'University',
                         style: TextStyle(
                           color: Colors.grey[600],
                           fontSize: 14,
@@ -299,7 +299,7 @@ class _LoginFourState extends State<LoginFour> {
                     ),
                     child: const Center(
                       child: Text(
-                        'University',
+                        'Select interests',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

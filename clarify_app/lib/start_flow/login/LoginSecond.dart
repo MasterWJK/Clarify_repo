@@ -144,7 +144,7 @@ class LoginSecond extends StatelessWidget {
                     ),
                     child: const Center(
                       child: Text(
-                        'Start Learning',
+                        'Confirm Name',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

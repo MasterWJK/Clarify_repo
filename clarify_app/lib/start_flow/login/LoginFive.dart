@@ -294,7 +294,7 @@ class _LoginFiveState extends State<LoginFive> {
                     ),
                     child: const Center(
                       child: Text(
-                        'Start Learning',
+                        'Confirm',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

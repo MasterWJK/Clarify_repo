@@ -295,7 +295,7 @@ class _LoginThirdState extends State<LoginThird> {
                     ),
                     child: const Center(
                       child: Text(
-                        'Start Learning',
+                        'Select language',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
