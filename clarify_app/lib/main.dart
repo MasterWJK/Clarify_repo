@@ -1,4 +1,6 @@
 import 'package:clarify_app/main_pages/profile/OwnProfile.dart';
+import 'package:clarify_app/start_flow/login/LoginSecond.dart';
+import 'package:clarify_app/start_flow/login/LoginStart.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'backend/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'main_pages/Home.dart';
 import 'main_pages/AIChat.dart';
 import 'main_pages/ChallengesPage.dart';
-import 'login/LoginScreen.dart';
-import 'main_pages/profile/OwnProfile.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -34,10 +34,17 @@ class MainApp extends StatelessWidget {
     );
     // Get the current user
     final user = FirebaseAuth.instance.currentUser;
+    print("FirebasAuth: " + user.toString());
 
     // Return either the Home or Login screen
     return MaterialApp(
-      home: user == null ? const LoginScreen() : const HomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => FirebaseAuth.instance.currentUser != null
+            ? LoginStart()
+            : const HomePage(),
+        '/login2': (context) => LoginSecond(),
+      },
     );
   }
 }
@@ -65,7 +72,7 @@ class _HomePageState extends State<HomePage> {
       },
     ),
     ChallengesPage(),
-    OwnProfile(),
+    const OwnProfile(),
   ];
 
   void _onItemTapped(int index) {
