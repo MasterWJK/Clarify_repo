@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clarify_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:dart_openai/dart_openai.dart';
 
@@ -100,7 +101,68 @@ class OpenAIChatPageState extends State<AIChat> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('OpenAI Chatbot'), // App title
+          automaticallyImplyLeading: false,
+          elevation: 2,
+          title: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(),
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    // go to Home page
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 300),
+                        transitionsBuilder: (BuildContext context,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                            Widget child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                        pageBuilder: (BuildContext context,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation) {
+                          return HomePage();
+                        },
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.keyboard_arrow_left_rounded,
+                    size: 35,
+                  ),
+                ),
+              ),
+              const CircleAvatar(
+                backgroundImage: AssetImage('assets/icon/ClarifyRound.png'),
+              ),
+              const SizedBox(width: 20),
+              const Padding(
+                padding: EdgeInsets.only(top: 6.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Clarify.ai',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: Colors.black)),
+                    Text('Active now',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: Colors.grey)),
+                  ],
+                ),
+              ),
+            ],
+          ),
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -112,55 +174,83 @@ class OpenAIChatPageState extends State<AIChat> {
             ),
           ),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              // Chat history
-              child: ListView.builder(
-                controller: _scrollController,
-                itemCount: _chatHistory.length,
-                itemBuilder: (context, index) {
-                  final message = _chatHistory[index];
-                  final isUserMessage = message.startsWith('User: ');
-                  return Container(
-                    alignment: isUserMessage
-                        ? Alignment.centerRight
-                        : Alignment.centerLeft,
-                    child: Container(
-                      padding: const EdgeInsets.all(10.0),
-                      margin: EdgeInsets.all(10.0),
-                      decoration: BoxDecoration(
-                        color:
-                            isUserMessage ? Colors.blue[100] : Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Text(
-                        message,
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                    ),
-                  );
-                },
-              ),
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFFC19BFF),
+                Colors.white,
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _textController,
-                onSubmitted: (text) {
-                  setState(() {
-                    _chatHistory.add('User: $text');
-                  });
-                  sendToAI(text);
-                  _textController.clear();
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Input your query',
-                  border: OutlineInputBorder(),
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                // Chat history
+                child: ListView.builder(
+                  controller: _scrollController,
+                  itemCount: _chatHistory.length,
+                  itemBuilder: (context, index) {
+                    final message = _chatHistory[index];
+                    final isUserMessage = message.startsWith('User: ');
+                    return Container(
+                      alignment: isUserMessage
+                          ? Alignment.centerRight
+                          : Alignment.centerLeft,
+                      child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        margin: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          color: isUserMessage
+                              ? Color(0xFFC19BFF)
+                              : Colors.grey[200],
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Text(
+                          message,
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 30),
+                child: TextField(
+                  controller: _textController,
+                  onSubmitted: (text) {
+                    setState(() {
+                      if (text.isNotEmpty) {
+                        _chatHistory.add('User: $text');
+                      }
+                    });
+                    sendToAI(text);
+                    _textController.clear();
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Input your query',
+                    labelStyle: TextStyle(color: Color(0xFFC19BFF)),
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFC19BFF)),
+                    ),
+                    // recoding icon
+                    suffixIcon: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.mic,
+                        color: Color(0xFFC19BFF),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

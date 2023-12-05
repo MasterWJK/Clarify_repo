@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'main_pages/Home.dart';
 import 'main_pages/AIChat.dart';
-import 'main_pages/ChallengesPage.dart';
+import 'main_pages/ProgressPage.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -44,6 +44,17 @@ class MainApp extends StatelessWidget {
             ? LoginStart()
             : const HomePage(),
         '/login2': (context) => LoginSecond(),
+        '/progress': (context) => ProgressPage(),
+        '/daily_ai': (context) => FutureBuilder<String>(
+              future: rootBundle.loadString('assets/.env'),
+              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                if (snapshot.hasData) {
+                  return AIChat(env: snapshot.data!);
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
       },
     );
   }
@@ -71,7 +82,7 @@ class _HomePageState extends State<HomePage> {
         }
       },
     ),
-    ChallengesPage(),
+    ProgressPage(),
     const OwnProfile(),
   ];
 
@@ -90,19 +101,19 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.speaker_notes), // Speech icon
+            icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.android), // Robot icon
-            label: 'AI Simulation',
+            icon: Icon(Icons.workspaces), // Robot icon
+            label: 'Daily AI',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.star), // Challenge icon
-            label: 'Challenges',
+            icon: Icon(Icons.computer_rounded), // Challenge icon
+            label: 'Progress',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle), // Profile icon
+            icon: Icon(Icons.person), // Profile icon
             label: 'Profile',
           ),
         ],

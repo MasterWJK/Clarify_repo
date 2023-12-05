@@ -2,41 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatelessWidget {
-  final List<Map<String, String>> articles = [
-    {
-      'title':
-          'OpenAI launches API that lets developers build assistants into their apps',
-      'preview':
-          'OpenAI has launched an API that lets developers build assistants into their apps. The API is designed to help developers create assistants that can understand natural language and perform tasks such as scheduling appointments, booking flights, and ordering food. The API is available for free to developers who sign up for OpenAI’s developer program.',
-      'url':
-          'https://techcrunch.com/2023/11/06/openai-launches-api-that-lets-developers-build-assistants-into-their-apps/?guccounter=1#:~:text=URL%3A%20https%3A%2F%2Ftechcrunch.com%2F2023%2F11%2F06%2Fopenai',
-    },
-    {
-      'title':
-          'Ministry of Education partners with ASI to develop AI tutor to boost education for all',
-      'preview':
-          'The Ministry of Education has partnered with ASI to develop an AI tutor to boost education for all. The AI tutor will be able to provide personalized learning experiences for students, helping them to learn at their own pace and in their own way. The project is part of the government’s efforts to improve education for all.',
-      'url':
-          'https://www.zawya.com/en/press-release/government-news/ministry-of-education-partners-with-asi-to-develop-ai-tutor-to-boost-education-for-all-c5bkn0f6',
-    },
-    {
-      'title':
-          'OpenAI wants to work with organizations to build new AI training data sets',
-      'preview':
-          'OpenAI is looking to work with organizations to build new AI training data sets. The company is hoping to create data sets that are more diverse and representative of the real world, which will help improve the accuracy and fairness of AI systems. OpenAI is inviting organizations to submit proposals for data sets that they would like to create.',
-      'url':
-          'https://techcrunch.com/2023/11/09/openai-wants-to-work-with-organizations-to-build-new-ai-training-data-sets/',
-    },
-    {
-      'title':
-          'A future-facing minister, a young inventor and a shared vision: an AI tutor for every student',
-      'preview':
-          'A new AI tutor is being developed to help every student in the UK. The project is being led by the UK’s Department for Education and is being developed in collaboration with a young inventor. The AI tutor will be able to provide personalized learning experiences for students, helping them to learn at their own pace and in their own way.',
-      'url':
-          'https://news.microsoft.com/europe/features/a-future-facing-minister-a-young-inventor-and-a-shared-vision-an-ai-tutor-for-every-student/',
-    },
-  ];
-
   Future<void> launchURL(String url) async {
     final Uri uri = Uri.parse(url);
     if (!await launchUrl(uri)) {
@@ -48,32 +13,276 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AI New Articles'),
+        automaticallyImplyLeading: false,
+        elevation: 0,
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFFC19BFF), // Your specified color
-                Color(0xFFB6E0FE),
+          color: Color(0xFFEAD9FF), // A much lighter shade, closer to white
+        ),
+        bottom: const PreferredSize(
+          preferredSize: Size.fromHeight(140.0), // Set your desired height here
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Hello Woojin!',
+                style: TextStyle(
+                    fontSize: 12.0, // Adjust the font size as needed
+                    color: Colors.black),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Continue your English \nspeaking lesson!',
+                style: TextStyle(
+                  fontSize: 26.0, // Adjust the font size as needed
+                  color: Color(0xFF957BF9), // Your specified color
+                  // bold
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Your Lessons',
+                style: TextStyle(
+                    fontSize: 12.0, // Adjust the font size as needed
+                    color: Colors.black),
+              ),
+              SizedBox(height: 20),
+            ],
+          ), // This can be an empty Container
+        ),
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFFC19BFF),
+              Colors.white,
+            ],
+          ),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () => // daily ai page
+                    Navigator.pushNamed(context, '/daily_ai'),
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(
+                          10), // This makes the container round
+                    ),
+                    width: MediaQuery.of(context).size.width *
+                        0.8, // 80% of screen width
+                    height: MediaQuery.of(context).size.height *
+                        0.2, // 20% of screen height
+                    child: Column(
+                      children: [
+                        Expanded(
+                          flex: 45,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10), // Adjust horizontal padding
+                            child: const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'AI conversation training',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(
+                                    height: 4), // Space between title and text
+
+                                Text(
+                                  'Improve your speaking abilities with your AI tutor, focusing on real-world scenarios.',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 55,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/Conversation.png'), // Replace with your image path
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () => // progress page
+                    Navigator.pushNamed(context, '/progress'),
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(
+                          10), // This makes the container round
+                    ),
+                    width: MediaQuery.of(context).size.width *
+                        0.8, // 80% of screen width
+                    height: MediaQuery.of(context).size.height *
+                        0.2, // 20% of screen height
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 45,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10), // Adjust horizontal padding
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Daily practice',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(
+                                    height: 4), // Space between title and text
+
+                                Text(
+                                  'Practice vocabulary, grammar and pronunciation. ',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 55,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/Practice.png'), // Replace with your image path
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // in widgetstyle
+            // Expanded(
+            //     child: ConversationTrainingCard(
+            //         content: "Test",
+            //         title: "Test",
+            //         picture: "assets/Conversation.png")),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ConversationTrainingCard extends StatelessWidget {
+  final String title;
+  final String content;
+  final String picture;
+
+  const ConversationTrainingCard({
+    Key? key,
+    required this.title,
+    required this.content,
+    required this.picture,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity, // Full width of the parent
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 8,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // White container for title and content
+          Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white, // White background color
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  content,
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 14,
+                  ),
+                ),
               ],
             ),
           ),
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: articles.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
+          // Image container
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
             ),
-            child: ListTile(
-              title: Text(articles[index]['title'] ?? ''),
-              subtitle: Text(articles[index]['preview'] ?? ''),
-              onTap: () => launchURL(articles[index]['url'] ?? ''),
+            child: Image.asset(
+              picture,
+              fit: BoxFit.cover, // Make sure the image covers the container
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

@@ -299,7 +299,7 @@ class _LoginFourState extends State<LoginFour> {
                     ),
                     child: const Center(
                       child: Text(
-                        'Select interests',
+                        'Select Interests',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
