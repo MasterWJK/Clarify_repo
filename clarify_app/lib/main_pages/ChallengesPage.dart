@@ -51,7 +51,7 @@ class ChallengeTile extends StatelessWidget {
     return Card(
       elevation: 2,
       child: ListTile(
-        leading: Icon(Icons.language, color: Colors.blue),
+        leading: Icon(Icons.language, color: Color(0xFF8A2BE2)),
         title: Text(challengeText),
         subtitle: Text('Level: $level'),
         trailing: Icon(Icons.arrow_forward_ios),
