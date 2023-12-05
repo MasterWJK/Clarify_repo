@@ -53,8 +53,8 @@ class Home extends StatelessWidget {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFF2196F3), // Lighter blue
-                Color(0xFF0D47A1), // Darker blue
+                Color(0xFFC19BFF), // Your specified color
+                Color(0xFFB6E0FE),
               ],
             ),
           ),

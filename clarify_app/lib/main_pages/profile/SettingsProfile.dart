@@ -95,8 +95,8 @@ class SettingsProfileState extends State<SettingsProfile> {
                                 fontWeight: FontWeight.w400,
                               ),
                               colors: const [
-                                Color(0xFF2196F3), // A vibrant light blue.
-                                Color(0xFF0D47A1), // A deep blue.
+                                Color(0xFFC19BFF), // Your specified color
+                                Color(0xFFB6E0FE),
                               ],
                             ),
                           ),
@@ -148,8 +148,8 @@ class SettingsProfileState extends State<SettingsProfile> {
                               fontWeight: FontWeight.w400,
                             ),
                             colors: const [
-                              Color(0xFF2196F3), // A vibrant light blue.
-                              Color(0xFF0D47A1), // A deep blue.
+                              Color(0xFFC19BFF), // Your specified color
+                              Color(0xFFB6E0FE),
                             ],
                           ),
                         ),
@@ -187,8 +187,8 @@ class SettingsProfileState extends State<SettingsProfile> {
                               fontWeight: FontWeight.w400,
                             ),
                             colors: const [
-                              Color(0xFF2196F3), // A vibrant light blue.
-                              Color(0xFF0D47A1), // A deep blue.
+                              Color(0xFFC19BFF), // Your specified color
+                              Color(0xFFB6E0FE),
                             ],
                           ),
                         ),
@@ -251,8 +251,8 @@ class SettingsProfileState extends State<SettingsProfile> {
                               fontWeight: FontWeight.w400,
                             ),
                             colors: const [
-                              Color(0xFF2196F3), // A vibrant light blue.
-                              Color(0xFF0D47A1), // A deep blue.
+                              Color(0xFFC19BFF), // Your specified color
+                              Color(0xFFB6E0FE),
                             ],
                           ),
                         ),
@@ -281,8 +281,8 @@ class SettingsProfileState extends State<SettingsProfile> {
                               fontWeight: FontWeight.w400,
                             ),
                             colors: const [
-                              Color(0xFF2196F3), // A vibrant light blue.
-                              Color(0xFF0D47A1), // A deep blue.
+                              Color(0xFFC19BFF), // Your specified color
+                              Color(0xFFB6E0FE),
                             ],
                           ),
                         ),
@@ -311,8 +311,8 @@ class SettingsProfileState extends State<SettingsProfile> {
                           borderRadius: BorderRadius.all(Radius.circular(27.0)),
                           gradient: LinearGradient(
                             colors: [
-                              Color(0xFF2196F3), // A vibrant light blue.
-                              Color(0xFF0D47A1), // A deep blue.
+                              Color(0xFFC19BFF), // Your specified color
+                              Color(0xFFB6E0FE),
                             ],
                             begin: Alignment(-1.0, -2.0),
                             end: Alignment(1.0, 2.0),
@@ -350,8 +350,8 @@ class SettingsProfileState extends State<SettingsProfile> {
                             fontWeight: FontWeight.w400,
                           ),
                           colors: const [
-                            Color(0xFF2196F3), // A vibrant light blue.
-                            Color(0xFF0D47A1), // A deep blue.
+                            Color(0xFFC19BFF), // Your specified color
+                            Color(0xFFB6E0FE),
                           ],
                         ),
                       ),

@@ -114,7 +114,7 @@ class OwnProfileState extends State<OwnProfile> {
                                     child: FittedBox(
                                         fit: BoxFit.cover,
                                         child: Image.asset(
-                                          'assets/icon/ClarifyAI.png',
+                                          'assets/icon/ClarifyAI2.png',
                                         )),
                                   ),
                                 ),
@@ -133,8 +133,8 @@ class OwnProfileState extends State<OwnProfile> {
                                 BorderRadius.all(Radius.circular(15.0)),
                             gradient: LinearGradient(
                               colors: [
-                                Color(0xFF006D77), // A teal blue color
-                                Color(0xFF003C64), // A darker navy blue color
+                                Color(0xFFC19BFF), // Your specified color
+                                Color(0xFFB6E0FE),
                               ],
                               begin: Alignment(-1.0, -2.0),
                               end: Alignment(1.0, 2.0),
@@ -308,10 +308,9 @@ class OwnProfileState extends State<OwnProfile> {
                                 const BorderRadius.all(Radius.circular(27.0)),
                             gradient: LinearGradient(
                               colors: [
-                                Color(0xFF0077B5).withOpacity(
-                                    0.15), // Lighter blue with opacity
-                                Color(0xFF005691).withOpacity(
-                                    0.15) // Darker blue with opacity
+                                Color(0xFFC19BFF)
+                                    .withOpacity(0.15), // Your specified color
+                                Color(0xFF8A2BE2).withOpacity(0.15),
                               ],
                               begin: const Alignment(-1.0, -2.0),
                               end: const Alignment(1.0, 2.0),
@@ -325,8 +324,8 @@ class OwnProfileState extends State<OwnProfile> {
                                 fontWeight: FontWeight.w500,
                               ),
                               colors: const [
-                                Color(0xFF0077B5), // Lighter blue
-                                Color(0xFF005691), // Darker blue
+                                Color(0xFF8A2BE2),
+                                Color(0xFF8A2BE2),
                               ],
                             ),
                           ),
