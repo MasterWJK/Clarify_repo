@@ -26,7 +26,7 @@ class LoginStart extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset(
-                    'assets/icon/ClarifyAI2.png',
+                    'assets/icon/ClarifyRound.png',
                     width: 150, // adjust the width as desired
                     height: 150, // adjust the height as desired
                   ),
