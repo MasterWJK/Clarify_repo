@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 import 'package:clarify_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:dart_openai/dart_openai.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 class AIChat extends StatefulWidget {
   final String env;
@@ -19,12 +23,51 @@ class OpenAIChatPageState extends State<AIChat> {
   late OpenAI client;
   StreamSubscription? _chatSubscription;
   final ScrollController _scrollController = ScrollController();
+  AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer.newPlayer();
 
   @override
   void initState() {
     super.initState();
     OpenAI.apiKey = widget.env;
     print(widget.env);
+  }
+
+  Future<String> createSpeech(String inputParameter) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    // The speech request.
+    File speechFile = await OpenAI.instance.audio.createSpeech(
+      model: "tts-1",
+      input: inputParameter,
+      voice: "nova",
+      responseFormat: OpenAIAudioSpeechResponseFormat.mp3,
+      outputDirectory: await Directory('$appDocPath/speechOutput').create(),
+      outputFileName: "output",
+    );
+    return speechFile.path;
+  }
+
+  Future<void> createTranscription(String filePath) async {
+    OpenAIAudioModel transcription =
+        await OpenAI.instance.audio.createTranscription(
+      file: File(filePath),
+      model: "whisper-1",
+      responseFormat: OpenAIAudioResponseFormat.json,
+    );
+
+    // print the transcription.
+    print(transcription.text);
+    // play the trascription
+    playAudioTranscript(transcription.text);
+  }
+
+  // Play the audio transcript
+  void playAudioTranscript(String filePath) {
+    assetsAudioPlayer.open(
+      Audio.file(filePath),
+      autoStart: true,
+      showNotification: true,
+    );
   }
 
   /// Sends a user query to OpenAI chatbot and listens to the response stream.
@@ -38,20 +81,15 @@ class OpenAIChatPageState extends State<AIChat> {
   /// The function returns nothing, but it sets [_chatSubscription] to the chat stream
   /// subscription, which can be used to cancel the subscription later.
   void sendToAI(String query) async {
-    final userMessage = OpenAIChatCompletionChoiceMessageModel(
-      content: [
-        OpenAIChatCompletionChoiceMessageContentItemModel.text(
-          query,
-        ),
-      ],
-      role: OpenAIChatMessageRole.user,
-    );
     if (query.isNotEmpty) {
       Stream<OpenAIStreamChatCompletionModel> chatStream =
           OpenAI.instance.chat.createStream(
         model: "gpt-3.5-turbo",
         messages: [
-          userMessage,
+          OpenAIChatCompletionChoiceMessageModel(
+            content: query,
+            role: OpenAIChatMessageRole.user,
+          ),
         ],
       );
 
@@ -59,7 +97,7 @@ class OpenAIChatPageState extends State<AIChat> {
         (streamChatCompletion) {
           final content = streamChatCompletion.choices.first.delta.content;
           // check if content is empty
-          streamWords(content! as String);
+          streamWords(content!);
         },
         onError: (error) {
           print(error);
@@ -96,6 +134,7 @@ class OpenAIChatPageState extends State<AIChat> {
     _chatSubscription?.cancel();
     _textController.dispose();
     _scrollController.dispose();
+    assetsAudioPlayer.dispose();
     super.dispose();
   }
 
@@ -209,13 +248,35 @@ class OpenAIChatPageState extends State<AIChat> {
                         margin: EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
                           color: isUserMessage
-                              ? Color(0xFFC19BFF)
+                              ? Color(0xFFB6E0FE)
                               : Colors.grey[200],
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        child: Text(
-                          message,
-                          style: TextStyle(fontSize: 16.0),
+                        constraints: BoxConstraints(
+                          maxWidth:
+                              250, // Set the maximum width for the container
+                        ),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: () async {
+                                String inputText = message.substring(6);
+                                String filepath = await createSpeech(inputText);
+                                // print(filepath);
+                                createTranscription(filepath); // for the output
+                              },
+                              icon: Icon(
+                                Icons.play_arrow,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                message,
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     );
@@ -245,7 +306,9 @@ class OpenAIChatPageState extends State<AIChat> {
                     ),
                     // recoding icon
                     suffixIcon: IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        // possibilty to record
+                      },
                       icon: const Icon(
                         Icons.mic,
                         color: Color(0xFFC19BFF),

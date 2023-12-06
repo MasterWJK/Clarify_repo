@@ -35,7 +35,15 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array><key>NSMicrophoneUsageDescription</key>
+		<string>This app needs access to the microphone for speech synthesis.</string>
+	<key>UIBackgroundModes</key>
 	<array>
+    	<string>fetch</string>
+    	<string>remote-notification</string>
+	</array>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>This app needs access to the documents folder for storing speech synthesis files.</string>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
