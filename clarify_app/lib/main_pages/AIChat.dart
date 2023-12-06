@@ -38,15 +38,20 @@ class OpenAIChatPageState extends State<AIChat> {
   /// The function returns nothing, but it sets [_chatSubscription] to the chat stream
   /// subscription, which can be used to cancel the subscription later.
   void sendToAI(String query) async {
+    final userMessage = OpenAIChatCompletionChoiceMessageModel(
+      content: [
+        OpenAIChatCompletionChoiceMessageContentItemModel.text(
+          query,
+        ),
+      ],
+      role: OpenAIChatMessageRole.user,
+    );
     if (query.isNotEmpty) {
       Stream<OpenAIStreamChatCompletionModel> chatStream =
           OpenAI.instance.chat.createStream(
         model: "gpt-3.5-turbo",
         messages: [
-          OpenAIChatCompletionChoiceMessageModel(
-            content: query,
-            role: OpenAIChatMessageRole.user,
-          ),
+          userMessage,
         ],
       );
 
@@ -54,7 +59,7 @@ class OpenAIChatPageState extends State<AIChat> {
         (streamChatCompletion) {
           final content = streamChatCompletion.choices.first.delta.content;
           // check if content is empty
-          streamWords(content!);
+          streamWords(content! as String);
         },
         onError: (error) {
           print(error);
