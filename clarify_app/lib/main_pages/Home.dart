@@ -80,33 +80,36 @@ class Home extends StatelessWidget {
                     child: Column(
                       children: [
                         Expanded(
-                          flex: 45,
+                          flex: 55,
                           child: Container(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10), // Adjust horizontal padding
-                            child: const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'AI conversation training',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                            child: const Padding(
+                              padding: EdgeInsets.all(6.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'AI conversation training',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                    height: 4), // Space between title and text
-
-                                Text(
-                                  'Improve your speaking abilities with your AI tutor, focusing on real-world scenarios.',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12,
+                                  SizedBox(
+                                      height:
+                                          4), // Space between title and text
+                                  Text(
+                                    'Improve your speaking abilities with your AI tutor, focusing on real-world scenarios.',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -146,10 +149,11 @@ class Home extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         Expanded(
-                          flex: 45,
+                          flex: 50,
                           child: Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 10), // Adjust horizontal padding
+                                horizontal: 16,
+                                vertical: 6), // Adjust horizontal padding
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
