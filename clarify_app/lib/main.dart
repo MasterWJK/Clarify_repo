@@ -1,3 +1,4 @@
+import 'package:clarify_app/main_pages/AITraining.dart';
 import 'package:clarify_app/main_pages/profile/OwnProfile.dart';
 import 'package:clarify_app/start_flow/login/LoginSecond.dart';
 import 'package:clarify_app/start_flow/login/LoginStart.dart';
@@ -55,6 +56,7 @@ class MainApp extends StatelessWidget {
                 }
               },
             ),
+        '/AITraining': (context) => AITraining(),
       },
     );
   }

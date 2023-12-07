@@ -421,7 +421,7 @@ class OpenAIChatPageState extends State<AiChat> {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 30),
+                    const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 60),
                 child: TextField(
                   controller: _textController,
                   onSubmitted: (text) {
