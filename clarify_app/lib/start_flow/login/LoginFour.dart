@@ -1,4 +1,4 @@
-import 'package:clarify_app/start_flow/login/LoginFive.dart';
+import 'package:clarify_app/start_flow/login/Login4.5.dart';
 import 'package:flutter/material.dart';
 
 class LoginFour extends StatefulWidget {
@@ -54,7 +54,7 @@ class _LoginFourState extends State<LoginFour> {
                   const Expanded(
                     child: LinearProgressIndicator(
                       minHeight: 8,
-                      value: 0.6, // 20% filled
+                      value: 0.6, // 60% filled
                       backgroundColor: Colors.white, // white
                       valueColor: AlwaysStoppedAnimation<Color>(
                         Color(0xFF6448CE),
@@ -285,7 +285,7 @@ class _LoginFourState extends State<LoginFour> {
                         pageBuilder: (BuildContext context,
                             Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return const LoginFive();
+                          return const LoginFourPointFive();
                         },
                       ),
                     );

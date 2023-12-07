@@ -7,6 +7,7 @@ import 'package:clarify_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:dart_openai/dart_openai.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class AiChat extends StatefulWidget {
   final String env;
@@ -36,6 +37,9 @@ class OpenAIChatPageState extends State<AiChat> {
   /// The audio player for playing audio assets.
   AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer.newPlayer();
 
+  stt.SpeechToText _speech = stt.SpeechToText();
+  bool _isListening = false;
+
   @override
   void initState() {
     super.initState();
@@ -47,11 +51,11 @@ class OpenAIChatPageState extends State<AiChat> {
 
   /// Represents the system message that will be sent to the request.
   ///
-  /// This message is designed for an assistant that responds with kindness and provides constructive feedback when a user makes a mistake. The assistant maintains a positive and supportive tone, ensuring the user feels encouraged and valued. It focuses on guiding the user towards the correct information or approach, while emphasizing learning and growth from mistakes.
+  /// This message is designed for an assistantvides constructive feedback.
   final systemMessage = OpenAIChatCompletionChoiceMessageModel(
     content: [
       OpenAIChatCompletionChoiceMessageContentItemModel.text(
-        "{This role is designed for an assistant that responds with kindness and provides constructive feedback when a user makes a mistake. The assistant maintains a positive and supportive tone, ensuring the user feels encouraged and valued. It focuses on guiding the user towards the correct information or approach, while emphasizing learning and growth from mistakes.",
+        "Hi, I'm Clarifybot, your friendly AI assistant! How can I help you today?",
       ),
     ],
     role: OpenAIChatMessageRole.assistant,
@@ -62,22 +66,28 @@ class OpenAIChatPageState extends State<AiChat> {
   /// The [inputParameter] is the text input for generating the speech.
   /// The method returns a [Future] that resolves to the path of the created speech file.
   Future<String> createSpeech(String inputParameter) async {
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    String appDocPath = appDocDir.path;
-    // The speech request.
-    File speechFile = await OpenAI.instance.audio.createSpeech(
-      model: "tts-1",
-      input: inputParameter,
-      voice: "nova",
-      responseFormat: OpenAIAudioSpeechResponseFormat.mp3,
-      outputDirectory: await Directory('$appDocPath/speechOutput').create(),
-      outputFileName: "output",
-    );
-    // print the path of the speech file.
-    if (kDebugMode) {
-      print(speechFile.path);
+    if (inputParameter.isEmpty) {
+      print('Input parameter is empty, skipping createSpeech call.');
+      return ''; // Return an empty string to indicate failure.
     }
-    return speechFile.path;
+
+    try {
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      String appDocPath = appDocDir.path;
+      File speechFile = await OpenAI.instance.audio.createSpeech(
+        model: "tts-1",
+        input: inputParameter,
+        voice: "nova",
+        responseFormat: OpenAIAudioSpeechResponseFormat.mp3,
+        outputDirectory: await Directory('$appDocPath/speechOutput').create(),
+        outputFileName: "output",
+      );
+      print(speechFile.path);
+      return speechFile.path;
+    } catch (e) {
+      print('Error in createSpeech: $e');
+      return ''; // Return an empty string to indicate failure.
+    }
   }
 
   /// Creates a transcription for the audio file located at the given [filePath].
@@ -86,14 +96,22 @@ class OpenAIChatPageState extends State<AiChat> {
   /// The response format of the transcription is JSON.
   /// Prints the created transcription text to the console.
   Future<void> createTranscription(String filePath) async {
-    OpenAIAudioModel transcription =
-        await OpenAI.instance.audio.createTranscription(
-      file: File(filePath),
-      model: "whisper-1",
-      responseFormat: OpenAIAudioResponseFormat.json,
-    );
-    if (kDebugMode) {
+    if (filePath.isEmpty || !File(filePath).existsSync()) {
+      print(
+          'File path is empty or file does not exist, skipping transcription.');
+      return;
+    }
+
+    try {
+      OpenAIAudioModel transcription =
+          await OpenAI.instance.audio.createTranscription(
+        file: File(filePath),
+        model: "whisper-1",
+        responseFormat: OpenAIAudioResponseFormat.json,
+      );
       print("Transcription is created: ${transcription.text}");
+    } catch (e) {
+      print('Error in createTranscription: $e');
     }
   }
 
@@ -125,14 +143,14 @@ class OpenAIChatPageState extends State<AiChat> {
       final userMessage = OpenAIChatCompletionChoiceMessageModel(
         content: [
           OpenAIChatCompletionChoiceMessageContentItemModel.text(
-            query,
+            "Please answer the input briefly and only if there is a mistake correct it: $query",
           ),
         ],
         role: OpenAIChatMessageRole.user,
       );
       Stream<OpenAIStreamChatCompletionModel> chatStream =
           OpenAI.instance.chat.createStream(
-        model: "gpt-3.5-turbo",
+        model: "gpt-4", // gpt-4, gpt-4 turbo, gpt-3.5-turbo
         messages: [
           userMessage,
           systemMessage,
@@ -141,10 +159,12 @@ class OpenAIChatPageState extends State<AiChat> {
 
       _chatSubscription = chatStream.listen(
         (streamChatCompletion) {
-          for (var element
-              in streamChatCompletion.choices.first.delta.content!) {
-            if (element.type == 'text') {
-              streamWords(element.text!);
+          if (streamChatCompletion.choices.first.delta.content != null) {
+            for (var element
+                in streamChatCompletion.choices.first.delta.content!) {
+              if (element.type == 'text') {
+                streamWords(element.text!);
+              }
             }
           }
         },
@@ -153,6 +173,26 @@ class OpenAIChatPageState extends State<AiChat> {
         },
       );
     }
+  }
+
+  // Extracted logic from IconButton's onPressed
+  Future<void> processAndPlayAudio(String message) async {
+    String inputText = '';
+    if (message.startsWith('Me:')) {
+      inputText = message.substring(4);
+    } else if (message.startsWith('Clarify:')) {
+      inputText = message.substring(9);
+    }
+
+    // Check if inputText is empty or null
+    if (inputText.isEmpty) {
+      print('Input text is empty, skipping createSpeech call.');
+      return;
+    }
+
+    String filepath = await createSpeech(inputText);
+    createTranscription(filepath); // for the output
+    playAudioTranscript(filepath);
   }
 
   /// Splits the [response] into words and updates the chat history accordingly.
@@ -176,6 +216,13 @@ class OpenAIChatPageState extends State<AiChat> {
           _chatHistory.add('Clarify: $word');
         }
       });
+
+      // Call the function after state update
+      if (!word.startsWith('Clarify: ')) {
+        Future.delayed(Duration.zero, () {
+          processAndPlayAudio(_chatHistory.last);
+        });
+      }
     }
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,
@@ -191,6 +238,16 @@ class OpenAIChatPageState extends State<AiChat> {
     _scrollController.dispose();
     assetsAudioPlayer.dispose();
     super.dispose();
+  }
+
+  void handleSubmit(String text) {
+    setState(() {
+      if (text.isNotEmpty) {
+        _chatHistory.add('Me: $text');
+      }
+    });
+    sendToAI(text);
+    _textController.clear();
   }
 
   /// Builds the AiChat page.
@@ -311,7 +368,7 @@ class OpenAIChatPageState extends State<AiChat> {
                   itemCount: _chatHistory.length,
                   itemBuilder: (context, index) {
                     final message = _chatHistory[index];
-                    final isUserMessage = message.startsWith('User: ');
+                    final isUserMessage = message.startsWith('Me: ');
                     return Container(
                       alignment: isUserMessage
                           ? Alignment.centerRight
@@ -334,8 +391,8 @@ class OpenAIChatPageState extends State<AiChat> {
                             IconButton(
                               onPressed: () async {
                                 String inputText = '';
-                                if (message.startsWith('User:')) {
-                                  inputText = message.substring(6);
+                                if (message.startsWith('Me:')) {
+                                  inputText = message.substring(4);
                                 } else if (message.startsWith('Clarify:')) {
                                   inputText = message.substring(9);
                                 }
@@ -368,13 +425,7 @@ class OpenAIChatPageState extends State<AiChat> {
                 child: TextField(
                   controller: _textController,
                   onSubmitted: (text) {
-                    setState(() {
-                      if (text.isNotEmpty) {
-                        _chatHistory.add('User: $text');
-                      }
-                    });
-                    sendToAI(text);
-                    _textController.clear();
+                    handleSubmit(text);
                   },
                   decoration: InputDecoration(
                     labelText: 'Input your query',
@@ -386,10 +437,34 @@ class OpenAIChatPageState extends State<AiChat> {
                     // recoding icon
                     suffixIcon: IconButton(
                       onPressed: () async {
-                        // possibilty to record
+                        if (_isListening) {
+                          // Stop listening
+                          await _speech.stop();
+                          setState(() {
+                            _isListening = false;
+                          });
+                          handleSubmit(_textController.text);
+                          _textController.clear();
+                        } else {
+                          // Start listening
+                          bool available = await _speech.initialize(
+                            onStatus: (val) => print('onStatus: $val'),
+                            onError: (val) => print('onError: $val'),
+                          );
+                          if (available) {
+                            setState(() => _isListening = true);
+                            _speech.listen(
+                              onResult: (result) {
+                                setState(() {
+                                  _textController.text = result.recognizedWords;
+                                });
+                              },
+                            );
+                          }
+                        }
                       },
-                      icon: const Icon(
-                        Icons.mic,
+                      icon: Icon(
+                        _isListening ? Icons.pause : Icons.mic,
                         color: Color(0xFFC19BFF),
                       ),
                     ),

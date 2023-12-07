@@ -1,19 +1,26 @@
-import 'package:clarify_app/main.dart';
+import 'package:clarify_app/start_flow/login/Login4.5.dart';
 import 'package:flutter/material.dart';
 
-class LoginFive extends StatefulWidget {
-  const LoginFive({Key? key}) : super(key: key);
+import 'LoginFive.dart';
+
+class LoginFourPointFive extends StatefulWidget {
+  const LoginFourPointFive({super.key});
 
   @override
-  State<LoginFive> createState() => _LoginFiveState();
+  State<LoginFourPointFive> createState() => _LoginFourPointFiveState();
 }
 
-class _LoginFiveState extends State<LoginFive> {
-  int selectedField = 1;
+class _LoginFourPointFiveState extends State<LoginFourPointFive> {
+  // Use a Set to track selected fields
+  Set<int> selectedFields = {};
 
-  void setSelectedField(int field) {
+  void toggleSelectedField(int field) {
     setState(() {
-      selectedField = field;
+      if (selectedFields.contains(field)) {
+        selectedFields.remove(field);
+      } else {
+        selectedFields.add(field);
+      }
     });
   }
 
@@ -49,7 +56,7 @@ class _LoginFiveState extends State<LoginFive> {
                   const Expanded(
                     child: LinearProgressIndicator(
                       minHeight: 8,
-                      value: 1.0, // 20% filled
+                      value: 0.8, // 80% filled
                       backgroundColor: Colors.white, // white
                       valueColor: AlwaysStoppedAnimation<Color>(
                         Color(0xFF6448CE),
@@ -69,7 +76,7 @@ class _LoginFiveState extends State<LoginFive> {
               const Padding(
                 padding: EdgeInsets.only(left: 60.0, right: 50.0, top: 70.0),
                 child: Text(
-                  'Great! How well do you speak english?',
+                  'What is your professsional background?',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -82,7 +89,7 @@ class _LoginFiveState extends State<LoginFive> {
               const Padding(
                 padding: EdgeInsets.only(left: 60.0, right: 60.0),
                 child: Text(
-                  'This will help us understand where you currently stand in your language learning journey.',
+                  'Let’s tailor the conversations to your professionals life!',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -98,10 +105,10 @@ class _LoginFiveState extends State<LoginFive> {
                 padding: const EdgeInsets.only(left: 40.0, right: 40.0),
                 child: InkWell(
                   onTap: () {
-                    setSelectedField(1);
+                    toggleSelectedField(1);
                   },
                   child: Opacity(
-                    opacity: selectedField == 1 ? 1.0 : 0.5,
+                    opacity: selectedFields.contains(1) ? 1.0 : 0.5,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.8,
                       height: MediaQuery.of(context).size.height * 0.06,
@@ -116,7 +123,7 @@ class _LoginFiveState extends State<LoginFive> {
                         border: Border.all(color: Colors.grey.shade300),
                       ),
                       child: Text(
-                        'Just started',
+                        'Business',
                         style: TextStyle(
                           color: Colors.grey[600],
                           fontSize: 14,
@@ -131,10 +138,10 @@ class _LoginFiveState extends State<LoginFive> {
                 padding: const EdgeInsets.only(left: 40.0, right: 40.0),
                 child: InkWell(
                   onTap: () {
-                    setSelectedField(2);
+                    toggleSelectedField(2);
                   },
                   child: Opacity(
-                    opacity: selectedField == 2 ? 1.0 : 0.5,
+                    opacity: selectedFields.contains(2) ? 1.0 : 0.5,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.8,
                       height: MediaQuery.of(context).size.height * 0.06,
@@ -149,7 +156,7 @@ class _LoginFiveState extends State<LoginFive> {
                         border: Border.all(color: Colors.grey.shade300),
                       ),
                       child: Text(
-                        'Can talk about basic topics',
+                        'Academics & Research',
                         style: TextStyle(
                           color: Colors.grey[600],
                           fontSize: 14,
@@ -164,10 +171,10 @@ class _LoginFiveState extends State<LoginFive> {
                 padding: const EdgeInsets.only(left: 40.0, right: 40.0),
                 child: InkWell(
                   onTap: () {
-                    setSelectedField(3);
+                    toggleSelectedField(3);
                   },
                   child: Opacity(
-                    opacity: selectedField == 3 ? 1.0 : 0.5,
+                    opacity: selectedFields.contains(3) ? 1.0 : 0.5,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.8,
                       height: MediaQuery.of(context).size.height * 0.06,
@@ -182,7 +189,7 @@ class _LoginFiveState extends State<LoginFive> {
                         border: Border.all(color: Colors.grey.shade300),
                       ),
                       child: Text(
-                        'Daily conversations',
+                        'IT & Tech',
                         style: TextStyle(
                           color: Colors.grey[600],
                           fontSize: 14,
@@ -197,10 +204,10 @@ class _LoginFiveState extends State<LoginFive> {
                 padding: const EdgeInsets.only(left: 40.0, right: 40.0),
                 child: InkWell(
                   onTap: () {
-                    setSelectedField(4);
+                    toggleSelectedField(4);
                   },
                   child: Opacity(
-                    opacity: selectedField == 4 ? 1.0 : 0.5,
+                    opacity: selectedFields.contains(4) ? 1.0 : 0.5,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.8,
                       height: MediaQuery.of(context).size.height * 0.06,
@@ -215,7 +222,7 @@ class _LoginFiveState extends State<LoginFive> {
                         border: Border.all(color: Colors.grey.shade300),
                       ),
                       child: Text(
-                        'Can handle almost all situations',
+                        'Other',
                         style: TextStyle(
                           color: Colors.grey[600],
                           fontSize: 14,
@@ -226,39 +233,39 @@ class _LoginFiveState extends State<LoginFive> {
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-              Padding(
-                padding: const EdgeInsets.only(left: 40.0, right: 40.0),
-                child: InkWell(
-                  onTap: () {
-                    setSelectedField(5);
-                  },
-                  child: Opacity(
-                    opacity: selectedField == 5 ? 1.0 : 0.5,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      padding: const EdgeInsets.only(
-                        left: 20.0,
-                        top: 14.0,
-                        bottom: 10.0,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Colors.grey.shade300),
-                      ),
-                      child: Text(
-                        'Am fully fluent',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 40.0),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 40.0, right: 40.0),
+              //   child: InkWell(
+              //     onTap: () {
+              //       toggleSelectedField(5);
+              //     },
+              //     child: Opacity(
+              //       opacity: selectedFields.contains(5) ? 1.0 : 0.5,
+              //       child: Container(
+              //         width: MediaQuery.of(context).size.width * 0.8,
+              //         height: MediaQuery.of(context).size.height * 0.06,
+              //         padding: const EdgeInsets.only(
+              //           left: 20.0,
+              //           top: 14.0,
+              //           bottom: 10.0,
+              //         ),
+              //         decoration: BoxDecoration(
+              //           color: Colors.white,
+              //           borderRadius: BorderRadius.circular(5),
+              //           border: Border.all(color: Colors.grey.shade300),
+              //         ),
+              //         child: Text(
+              //           'University',
+              //           style: TextStyle(
+              //             color: Colors.grey[600],
+              //             fontSize: 14,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              const SizedBox(height: 60.0),
 
               Padding(
                 padding: const EdgeInsets.only(left: 107.0, right: 100.0),
@@ -280,7 +287,7 @@ class _LoginFiveState extends State<LoginFive> {
                         pageBuilder: (BuildContext context,
                             Animation<double> animation,
                             Animation<double> secondaryAnimation) {
-                          return HomePage();
+                          return const LoginFive();
                         },
                       ),
                     );
@@ -294,7 +301,7 @@ class _LoginFiveState extends State<LoginFive> {
                     ),
                     child: const Center(
                       child: Text(
-                        'Confirm',
+                        'Select Interests',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
