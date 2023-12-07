@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'main_pages/Home.dart';
-import 'main_pages/AIChat.dart';
+import 'main_pages/AiChat.dart';
 import 'main_pages/ProgressPage.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -49,7 +49,7 @@ class MainApp extends StatelessWidget {
               future: rootBundle.loadString('assets/.env'),
               builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                 if (snapshot.hasData) {
-                  return AIChat(env: snapshot.data!);
+                  return AiChat(env: snapshot.data!);
                 } else {
                   return const Center(child: CircularProgressIndicator());
                 }
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
       future: rootBundle.loadString('assets/.env'),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         if (snapshot.hasData) {
-          return AIChat(env: snapshot.data!);
+          return AiChat(env: snapshot.data!);
         } else {
           return const Center(child: CircularProgressIndicator());
         }
