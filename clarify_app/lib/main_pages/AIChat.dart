@@ -143,7 +143,7 @@ class OpenAIChatPageState extends State<AiChat> {
       final userMessage = OpenAIChatCompletionChoiceMessageModel(
         content: [
           OpenAIChatCompletionChoiceMessageContentItemModel.text(
-            "Please answer the input briefly and only if there is a mistake correct it: $query",
+            "Please answer maximum 2 sentences and only if there is a mistake correct it: $query",
           ),
         ],
         role: OpenAIChatMessageRole.user,
@@ -216,14 +216,8 @@ class OpenAIChatPageState extends State<AiChat> {
           _chatHistory.add('Clarify: $word');
         }
       });
-
-      // Call the function after state update
-      if (!word.startsWith('Clarify: ')) {
-        Future.delayed(Duration.zero, () {
-          processAndPlayAudio(_chatHistory.last);
-        });
-      }
     }
+
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,
       duration: const Duration(milliseconds: 500),
@@ -247,6 +241,7 @@ class OpenAIChatPageState extends State<AiChat> {
       }
     });
     sendToAI(text);
+    // Call the function after state update
     _textController.clear();
   }
 
@@ -440,11 +435,17 @@ class OpenAIChatPageState extends State<AiChat> {
                         if (_isListening) {
                           // Stop listening
                           await _speech.stop();
+                          handleSubmit(_textController.text);
                           setState(() {
                             _isListening = false;
+                            _textController.clear();
                           });
-                          handleSubmit(_textController.text);
-                          _textController.clear();
+
+                          // wait for the state to update
+                          await Future.delayed(
+                              const Duration(milliseconds: 8000));
+                          print(_chatHistory);
+                          processAndPlayAudio(_chatHistory.last);
                         } else {
                           // Start listening
                           bool available = await _speech.initialize(

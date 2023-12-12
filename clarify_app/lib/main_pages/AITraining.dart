@@ -124,12 +124,12 @@ class _AITrainingState extends State<AITraining> {
 
                     // Array of asset paths for icons, replace with your actual asset paths
                     const icons = [
-                      'assets/icon/work.png',
-                      'assets/icon/work.png',
-                      'assets/icon/work.png',
-                      'assets/icon/work.png',
-                      'assets/icon/work.png',
-                      'assets/icon/work.png',
+                      'assets/icon/TeamCollaboration.png',
+                      'assets/icon/ClientMeeting.png',
+                      'assets/icon/ProjectPlanning.png',
+                      'assets/icon/SalesStrategy.png',
+                      'assets/icon/MarketResearch.png',
+                      'assets/icon/InnovationBrainstorm.png',
                     ];
 
                     // Ensure the index is within the range of available titles and icons
@@ -191,7 +191,7 @@ class _AITrainingState extends State<AITraining> {
                   title,
                   style: const TextStyle(
                     fontSize: 14,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -199,8 +199,8 @@ class _AITrainingState extends State<AITraining> {
                 alignment: Alignment.bottomRight,
                 child: Image.asset(
                   assetName,
-                  width: 80,
-                  height: 80,
+                  width: 100,
+                  height: 100,
                 ),
               ),
             ],

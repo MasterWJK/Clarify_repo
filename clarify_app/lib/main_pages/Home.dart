@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 // Future<void> launchURL(String url) async {
 //   final Uri uri = Uri.parse(url);
 //   if (!await launchUrl(uri)) {
@@ -8,6 +8,8 @@ import 'package:url_launcher/url_launcher.dart';
 // }
 
 class Home extends StatelessWidget {
+  const Home({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,10 +153,10 @@ class Home extends StatelessWidget {
                         Expanded(
                           flex: 50,
                           child: Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 16,
                                 vertical: 6), // Adjust horizontal padding
-                            child: Column(
+                            child: const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -183,7 +185,7 @@ class Home extends StatelessWidget {
                         Expanded(
                           flex: 55,
                           child: Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
                                     'assets/Practice.png'), // Replace with your image path
@@ -217,11 +219,11 @@ class ConversationTrainingCard extends StatelessWidget {
   final String picture;
 
   const ConversationTrainingCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.content,
     required this.picture,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -229,7 +231,7 @@ class ConversationTrainingCard extends StatelessWidget {
       width: double.infinity, // Full width of the parent
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             blurRadius: 8,
@@ -244,7 +246,7 @@ class ConversationTrainingCard extends StatelessWidget {
           // White container for title and content
           Container(
             padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white, // White background color
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
